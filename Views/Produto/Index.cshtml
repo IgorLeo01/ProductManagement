@@ -1,0 +1,94 @@
+@model IEnumerable<ProductManagementApp.Models.Produto>
+
+    @{
+    ViewData["Title"] = "Produto Index";
+    }
+
+    <h1>@ViewData["Title"]</h1>
+
+    <form method="get" asp-action="Index">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" placeholder="Pesquisar produto..." value="@ViewData["Search"]" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </form>
+
+    <a href="@Url.Action("Create", "Produto")" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Criar Novo Produto
+    </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produto in Model)
+        {
+            <tr>
+                <td>@produto.Nome</td>
+                <td>@produto.Descricao</td>
+                <td>@produto.Preco</td>
+                <td>@produto.QuantidadeEmEstoque</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Produto", new { id = produto.Id })" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    &nbsp;
+                    &nbsp;
+                    <a href="@Url.Action("Delete", "Produto", new { id = produto.Id })" title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div>
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="?page=@(ViewBag.CurrentPage - 1)&search=@ViewData["Search"]">Anterior</a>
+            </li>
+        }
+
+            <li class="page-item disabled">
+                <span class="page-link">Página @ViewBag.CurrentPage de @ViewBag.TotalPages</span>
+            </li>
+
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="?page=@(ViewBag.CurrentPage + 1)&search=@ViewData["Search"]">Próxima</a>
+            </li>
+        }
+        </ul>
+    </div>
+
+    @section Scripts {
+        @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            var successMessage = '@Html.Raw(JsonConvert.SerializeObject(TempData["SuccessMessage"]))';
+            showToast(successMessage, 'success');
+        </script>
+    }
+        @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            var errorMessage = '@Html.Raw(JsonConvert.SerializeObject(TempData["ErrorMessage"]))';
+            showToast(errorMessage, 'error');
+        </script>
+    }
+    }
