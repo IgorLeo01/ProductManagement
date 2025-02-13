@@ -1,0 +1,59 @@
+@model ProductManagementApp.Models.Produto
+
+@{
+    ViewData["Title"] = "Cadastrar Produto";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<form asp-action="Create" method="post">
+    <div class="form-group mt-3">
+        <label for="Nome">Nome</label>
+        <input type="text" class="form-control" id="Nome" asp-for="Nome" required placeholder="Informe o nome do produto" maxlength="100" />
+        <span asp-validation-for="Nome" class="text-danger"></span> 
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="Descricao">Descrição</label>
+        <input type="text" class="form-control" id="Descricao" asp-for="Descricao" required placeholder="Informe a descrição do produto" maxlength="200" />
+        <span asp-validation-for="Descricao" class="text-danger"></span> 
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="Preco">Preço</label>
+        <input type="text" class="form-control" id="Preco" asp-for="Preco" required placeholder="Preço (ex: 100,00)" />
+        <span asp-validation-for="Preco" class="text-danger"></span> 
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="QuantidadeEmEstoque">Quantidade em Estoque</label>
+        <input type="text" class="form-control" id="QuantidadeEmEstoque" asp-for="QuantidadeEmEstoque" required placeholder="Quantidade disponível no estoque" />
+        <span asp-validation-for="QuantidadeEmEstoque" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
+</form>
+
+<script>
+    document.getElementById('Preco').addEventListener('input', function (e) {
+        var value = e.target.value;
+
+        value = value.replace(/[^\d]/g, '');
+
+        if (value.length > 2) {
+            value = value.slice(0, value.length - 2) + ',' + value.slice(value.length - 2);
+        }
+
+        e.target.value = value;
+    });
+
+    document.getElementById('QuantidadeEmEstoque').addEventListener('input', function (e) {
+        var value = e.target.value;
+
+        value = value.replace(/\D/g, '');
+
+        e.target.value = value;
+    });
+</script>
