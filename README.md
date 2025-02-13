@@ -89,3 +89,40 @@ dotnet test
 - **AddProdutoAsync_ShouldAddProduct**: Testa a adição de um novo produto.
 - **EditProdutoAsync_ShouldUpdateProduct**: Testa a atualização de um produto existente.
 - **RemoveProdutoAsync_ShouldRemoveProduct**: Testa a remoção de um produto.
+
+### Estrutura de Pastas 
+
+A arquitetura da aplicação segue o padrão MVC (Model-View-Controller) com foco na clareza e organização do código. Abaixo, está a estrutura de pastas e como cada parte da aplicação está organizada.
+
+```bash
+ProductManagementApp/
+│
+├── Controllers/
+│   └── ProdutoController.cs           # Controlador responsável pelas operações de CRUD dos produtos
+│
+├── Data/
+│   └── AppDbContext.cs               # Contexto do banco de dados usando Entity Framework
+│
+├── Models/
+│   └── Produto.cs                    # Modelo de dados para o produto
+│
+├── Services/
+│   └── ProductService.cs             # Serviço responsável pela lógica de negócios relacionada aos produtos
+│
+├── Views/
+│   └── Produto/
+│       ├── Create.cshtml             # View para criação de um novo produto
+│       ├── Edit.cshtml               # View para edição de um produto existente
+│       ├── Index.cshtml              # View para listagem de todos os produtos
+│       └── Delete.cshtml             # View para deletar um produto
+│
+├── ProductManagementApp.Tests/
+|                       ├── ProductManagementApp.Tests.csproj                                
+│                       └── ProductServiceTest.cs  # Serviço de testes unitários do crud de produtos
+├── Properties/
+│   └── launchSettings.json           # Configurações do ambiente de execução (ex: URLs, variáveis de ambiente)
+│
+├── appsettings.json                 # Configuração de conexão com banco de dados e outras configurações gerais
+├── Program.cs                        # Arquivo de entrada principal da aplicação
+└── ProductManagementApp.csproj   
+```
